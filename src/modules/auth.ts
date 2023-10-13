@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
  * @returns
  */
 
-const hashPassword = (password) => {
+export const hashPassword = (password) => {
   return bcrypt.hash(password, 5);
 };
 
@@ -17,8 +17,8 @@ const hashPassword = (password) => {
  * @param hash
  */
 
-const comparePassword = (password, hash) => {
-  bcrypt.compare(password, hash);
+export const comparePassword = (password, hash) => {
+  return bcrypt.compare(password, hash);
 };
 
 export const createJWT = (user) => {
