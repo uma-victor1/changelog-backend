@@ -54,11 +54,11 @@ export const protect = (req, res, next) => {
     if (!user) {
       res.status(401);
       res.json({ message: "wrong user" });
+    } else {
+      next();
     }
   } catch (e) {
     res.status(400);
     res.json({ error: "jwt error " + e });
   }
-
-  // next();
 };

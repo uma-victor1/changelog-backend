@@ -11,15 +11,18 @@ export const createNewUser = async (req, res) => {
     res.status(400).json({ message: "username and password is missing" });
   }
 
-  const user = await prisma.user.create({
-    data: {
-      username: username,
-      password: await hashPassword(password),
-    },
-  });
-
-  const token = createJWT(user);
-  res.json({ token });
+  try {
+    const user = await prisma.user.create({
+      data: {
+        username: username,
+        password: await hashPassword(password),
+      },
+    });
+    const token = createJWT(user);
+    res.json({ token });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const signIn = async (req, res) => {
