@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction } from "express/index";
-import { validate, ProductSchema, UpdateSchema } from "./schema";
+import validate, {
+  ProductSchema,
+  UpdateSchema,
+  updatePointSchema,
+} from "./validations";
 import { Router } from "express";
 
 const router = Router();
@@ -37,7 +41,13 @@ router.delete("/product/:id", () => {});
 
 router.get("/update");
 router.get("/update/:id", () => {});
-router.put("/update/:id", () => {});
+router.put(
+  "/update/:id",
+  validate(UpdateSchema),
+  (req: Request, res: Response, next: NextFunction) => {
+    res.send("updated product");
+  }
+);
 router.post(
   "/update/",
   validate(UpdateSchema),
@@ -53,8 +63,20 @@ router.delete("/update/:id", () => {});
 
 router.get("/updatepoint", () => {});
 router.get("/updatepoint/:id", () => {});
-router.put("/updatepoint/:id", () => {});
-router.post("/updatepoint/", () => {});
+router.put(
+  "/updatepoint/:id",
+  validate(updatePointSchema),
+  (req: Request, res: Response, next: NextFunction) => {
+    res.send("updated product");
+  }
+);
+router.post(
+  "/updatepoint/",
+  validate(updatePointSchema),
+  (req: Request, res: Response, next: NextFunction) => {
+    res.send("updated product");
+  }
+);
 router.delete("/updatepoint/:id", () => {});
 
 export default router;

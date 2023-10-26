@@ -1,6 +1,15 @@
-import { z, AnyZodObject, Schema } from "zod";
+import { z, AnyZodObject } from "zod";
 import { Request, Response, NextFunction } from "express/index";
-import { UPDATE_STATUSES } from "@prisma/client";
+
+export const userSchema = z.object({
+  body: z.object({
+    username: z
+      .string({ required_error: "username is required" })
+      .min(2)
+      .max(20),
+    password: z.string().min(8),
+  }),
+});
 
 export const ProductSchema = z.object({
   body: z.object({
@@ -14,14 +23,24 @@ export const ProductSchema = z.object({
 
 export const UpdateSchema = z.object({
   body: z.object({
-    title: z.string().optional(),
+    title: z.string(),
     body: z.string().optional(),
-    status: z.nativeEnum(UPDATE_STATUSES),
+    status: z
+      .enum(["IN_PROGRESS", "SHIPPED", "DEPRECATED"])
+      .default("IN_PROGRESS"),
     version: z.string().optional(),
+    asset: z.string().min(5).optional(),
   }),
 });
 
-export const validate =
+export const updatePointSchema = z.object({
+  body: z.object({
+    name: z.string().min(2),
+    description: z.string().min(15).max(300).optional(),
+  }),
+});
+
+const validate =
   (schema: AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -35,3 +54,4 @@ export const validate =
       return res.status(400).json(error);
     }
   };
+export default validate;
