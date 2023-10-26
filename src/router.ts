@@ -6,17 +6,13 @@ import validate, {
 } from "./validations";
 import { Router } from "express";
 
+import { getAllProducts } from "./handlers/product";
 const router = Router();
 
 /**
  * product routes
  */
-router.get("/product", (req: Request, res: Response, next: NextFunction) => {
-  res.statusCode = 200;
-  res.status(200);
-
-  res.json({ message: "hello" });
-});
+router.get("/product", getAllProducts);
 router.get("/product/:id", () => {});
 
 router.put(

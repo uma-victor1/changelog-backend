@@ -1,5 +1,9 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { Request, Response, NextFunction } from "express";
+import { User, user } from "../validations";
+
+export interface Req extends Request, User {}
 
 /**
  * Handling password hashing
@@ -33,7 +37,7 @@ export const createJWT = (user) => {
   return token;
 };
 
-export const protect = (req, res, next) => {
+export const protect = (req: Req, res: Response, next: NextFunction) => {
   const bearer = req.headers.authorization;
 
   if (!bearer) {
@@ -50,11 +54,12 @@ export const protect = (req, res, next) => {
   }
 
   try {
-    const user = jwt.verify(token, process.env.JWT_SECRET);
+    const user: user = jwt.verify(token, process.env.JWT_SECRET);
     if (!user) {
       res.status(401);
       res.json({ message: "wrong user" });
     } else {
+      req.user = user;
       next();
     }
   } catch (e) {

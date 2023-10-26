@@ -11,6 +11,11 @@ export const userSchema = z.object({
   }),
 });
 
+export type user = z.infer<typeof userSchema>["body"];
+export type User = {
+  user: user;
+};
+
 export const ProductSchema = z.object({
   body: z.object({
     name: z
