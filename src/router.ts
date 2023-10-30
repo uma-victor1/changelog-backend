@@ -6,30 +6,23 @@ import validate, {
 } from "./validations";
 import { Router } from "express";
 
-import { getAllProducts } from "./handlers/product";
+import {
+  getAllProducts,
+  addProduct,
+  getProductById,
+  deleteProduct,
+  updateProduct,
+} from "./handlers/product";
 const router = Router();
 
 /**
  * product routes
  */
 router.get("/product", getAllProducts);
-router.get("/product/:id", () => {});
-
-router.put(
-  "/product/:id",
-  validate(ProductSchema),
-  (req: Request, res: Response, next: NextFunction) => {
-    res.send("added");
-  }
-);
-router.post(
-  "/product/",
-  validate(ProductSchema),
-  (req: Request, res: Response, next: NextFunction) => {
-    res.send("added product");
-  }
-);
-router.delete("/product/:id", () => {});
+router.get("/product/:id", getProductById);
+router.put("/product/:id", validate(ProductSchema), updateProduct);
+router.post("/product/", validate(ProductSchema), addProduct);
+router.delete("/product/:id", deleteProduct);
 
 /**
  * Update
@@ -37,21 +30,9 @@ router.delete("/product/:id", () => {});
 
 router.get("/update");
 router.get("/update/:id", () => {});
-router.put(
-  "/update/:id",
-  validate(UpdateSchema),
-  (req: Request, res: Response, next: NextFunction) => {
-    res.send("updated product");
-  }
-);
-router.post(
-  "/update/",
-  validate(UpdateSchema),
-  (req: Request, res: Response, next: NextFunction) => {
-    res.send("updated product");
-  }
-);
-router.delete("/update/:id", () => {});
+router.put("/update/:id", validate(UpdateSchema));
+router.post("/update/", validate(UpdateSchema));
+router.delete("/update/:id");
 
 /**
  * update point

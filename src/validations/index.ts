@@ -3,11 +3,11 @@ import { Request, Response, NextFunction } from "express/index";
 
 export const userSchema = z.object({
   body: z.object({
+    id: z.string(),
     username: z
       .string({ required_error: "username is required" })
       .min(2)
       .max(20),
-    password: z.string().min(8),
   }),
 });
 
