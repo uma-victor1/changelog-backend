@@ -13,7 +13,7 @@ import {
   deleteProduct,
   updateProduct,
 } from "./handlers/product";
-const router = Router();
+export const router = Router();
 
 /**
  * product routes

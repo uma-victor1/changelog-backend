@@ -1,6 +1,18 @@
+/**
+ *
+ * @fileoverview handlers for our routes
+ *
+ */
+
 import prisma from "../db";
 import { Req } from "../modules/auth";
 
+/**
+ *
+ * Product handlers
+ */
+
+// get all products
 export const getAllProducts = async (req: Req, res) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -31,6 +43,7 @@ export const getProductById = async (req: Req, res) => {
 };
 
 // create a product
+
 export const addProduct = async (req: Req, res) => {
   const { name } = req.body;
 
@@ -50,6 +63,7 @@ export const addProduct = async (req: Req, res) => {
 };
 
 // delete product
+
 export const deleteProduct = async (req: Req, res) => {
   try {
     const response = prisma.product.delete({
@@ -80,3 +94,7 @@ export const updateProduct = async (req: Req, res) => {
     res.json({ data: response });
   } catch (error) {}
 };
+
+/**
+ * update handlers
+ */
